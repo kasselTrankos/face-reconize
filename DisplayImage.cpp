@@ -26,23 +26,26 @@ static void help()
 }
 
 
-int main(int argc, char *argv[])
+int main( int argc, char** argv )
 {
-    help();
-
-    if (argc != 2)
+    if( argc != 2)
     {
-        cout << "Wrong number of parameters" << endl;
+     cout <<" Usage: display_image ImageToLoadAndDisplay" << endl;
+     return -1;
+    }
+
+    Mat image;
+    image = imread(argv[1], IMREAD_COLOR);   // Read the file
+
+    if(! image.data )                              // Check for invalid input
+    {
+        cout <<  "Could not open or find the image" << std::endl ;
         return -1;
     }
 
-    cout << "Loading input image: " << argv[1] << endl;
-    Mat input;
-    input = imread(argv[1], IMREAD_COLOR);
+    namedWindow( "Display window", WINDOW_NORMAL );// Create a window for display.
+    imshow( "Display window", image );                   // Show our image inside it.
 
-    cout << "Detecting edges in input image" << endl;
-    Mat edges;
-    Canny(input, edges, 10, 100);
-
+    waitKey(0);                                          // Wait for a keystroke in the window
     return 0;
 }
