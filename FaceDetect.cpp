@@ -15,15 +15,15 @@ using namespace cv;
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
-        cout << "Wrong number of parameters" << endl;
-        return -1;
-    }
-
-    cout << "Loading input image: " << argv[1] << endl;
-    Mat img;
-    img = imread(argv[1], IMREAD_COLOR);
+  if (argc != 2) {
+    cout << "Wrong number of parameters" << endl;
+    return -1;
+  }
+  const char *r = "rect-";
+  char* imageName = argv[1];
+  cout << "Loading input image: " << imageName << endl;
+  Mat img;
+  img = imread(imageName, IMREAD_COLOR);
 
     CascadeClassifier cascade;
     if (cascade.load("haarcascade_frontalface_alt.xml")) {
@@ -31,22 +31,18 @@ int main(int argc, char *argv[])
       vector<Rect> faces;
       cascade.detectMultiScale(img, faces, 1.1, 3, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
       printf("%zd face(s) are found.\n", faces.size());
-      for (int i = 0; i < faces.size(); i++) {
-        Rect r = faces[i];
-        printf("a face is found at Rect(%d,%d,%d,%d).\n", r.x, r.y, r.width, r.height);
-      }
       for( vector<cv::Rect>::const_iterator r = faces.begin(); r != faces.end(); r++) {            
         //rectangle(img, *r, Scalar(0,0,255), 2, 8, 0);
         rectangle( img, 
           Point( r->x, r->y ), 
           Point( r->x + r->width, r->y + r->height ), 
           Scalar(0,0,255));
-        cout<<"In the loop\n";
-        imwrite("myImageWithRect.jpg",img);
+        string m = "rect-"  + string(imageName);
+        imwrite(m, img);
       }
     }
-    namedWindow( "Display window", WINDOW_NORMAL );// Create a window for display.
-    imshow( "Display window", img );                   // Show our image inside it.
+    namedWindow( "Image with Rects", WINDOW_NORMAL );// Create a window for display.
+    imshow( "Faces", img );                   // Show our image inside it.
 
     waitKey(0);                                          // Wait for a keystroke in the window
     return 0;
