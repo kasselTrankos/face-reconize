@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
           Point( r->x + r->width, r->y + r->height ), 
           Scalar(0,0,255));
         cout<<"In the loop\n";
+        imwrite("myImageWithRect.jpg",img);
       }
     }
     namedWindow( "Display window", WINDOW_NORMAL );// Create a window for display.

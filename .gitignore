@@ -1,7 +1,8 @@
 DisplayImage
 FaceDetect
 CMakeFiles/
-3.jpeg
+*.jpeg
+*.jpg
 cmake_install.cmake
 CMakeCache.txt
 Makefile
